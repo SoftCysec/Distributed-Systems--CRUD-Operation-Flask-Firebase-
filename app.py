@@ -7,7 +7,7 @@ from flask_mail import Mail, Message
 app = Flask(__name__)
 
 # Initialize Firebase credentials
-cred = credentials.Certificate('distributed-systems-e4695-firebase-adminsdk-ixk0v-322ed17123.json')
+cred = credentials.Certificate('Configs/distributed-systems-e4695-firebase-adminsdk-ixk0v-322ed17123.json')
 firebase_admin.initialize_app(cred)
 
 # Create a Firestore client
