@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; margin: 20px;">
+
+    <h1 style="color: #333;">Welcome, {{ username }}!</h1>
+
+    <form action="/save_contact" method="post" style="max-width: 400px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f8f8;">
+
+        <label for="mobile_number" style="display: block; margin-bottom: 8px; font-weight: bold;">Mobile Phone Number:</label>
+        <input type="tel" id="mobile_number" name="mobile_number" required style="width: 100%; padding: 8px; margin-bottom: 12px; box-sizing: border-box;">
+
+        <label for="email" style="display: block; margin-bottom: 8px; font-weight: bold;">Email:</label>
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 8px; margin-bottom: 12px; box-sizing: border-box;">
+
+        <label for="address" style="display: block; margin-bottom: 8px; font-weight: bold;">Address:</label>
+        <input type="text" id="address" name="address" required style="width: 100%; padding: 8px; margin-bottom: 12px; box-sizing: border-box;">
+
+        <label for="registration_number" style="display: block; margin-bottom: 8px; font-weight: bold;">Registration Number:</label>
+        <input type="text" id="registration_number" name="registration_number" required style="width: 100%; padding: 8px; margin-bottom: 12px; box-sizing: border-box;">
+
+        <input type="submit" value="Save Contact" style="background-color: #4caf50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
+    </form>
+
+    <p style="margin-top: 20px;">
+        <a href="/search_contacts" id="searchContactsLink" style="color: #3498db; text-decoration: none; font-weight: bold;">Search Contacts</a>
+    </p>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+        
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZ5mI7mWmgvBekVPn0LJSoO-XMuARclAA",
+            authDomain: "distributed-systems-e4695.firebaseapp.com",
+            projectId: "distributed-systems-e4695",
+            storageBucket: "distributed-systems-e4695.appspot.com",
+            messagingSenderId: "854989262551",
+            appId: "1:854989262551:web:10bdae28bddb3b78c76a92",
+            measurementId: "G-TVRVC6DTKX"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+
+        document.getElementById('searchContactsLink').addEventListener('click', function (event) {
+            event.preventDefault();
+    
+            // Redirect to the search_contacts endpoint
+            window.location.href = '/search_contacts';
+        });
+    </script>
+
+</body>
+</html>

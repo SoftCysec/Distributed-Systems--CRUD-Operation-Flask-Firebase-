@@ -1,0 +1,12 @@
+{
+    "indexes": [{
+        "collectionGroup": "contacts",
+        "fields": [
+            { "fieldPath": "registration_number", "order": "ASCENDING" }
+        ],
+        "queryScope": "COLLECTION",
+        "singleFieldIndex": true
+    }],
+
+    "fieldOverrides": []
+}

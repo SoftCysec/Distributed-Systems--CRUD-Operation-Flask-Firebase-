@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Contacts</title>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; margin: 20px;">
+
+    <h1 style="color: #333;">Search Contacts</h1>
+
+    <form id="searchForm" style="max-width: 400px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f8f8f8;">
+        <label for="registration_number" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter Registration Number:</label>
+        <input type="text" id="registration_number" name="registration_number" required style="width: 100%; padding: 8px; margin-bottom: 12px; box-sizing: border-box;">
+        <button type="button" onclick="searchContacts()" style="background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Search</button>
+    </form>
+
+    <div id="contactDetails" style="margin-top: 20px; display: none; border: 1px solid #ccc; padding: 10px; border-radius: 5px; background-color: #e1f7d5;">
+        <h2>Contact Details:</h2>
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Mobile Number:</strong> <span id="mobile_number"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Address:</strong> <span id="address"></span></p>
+    </div>
+
+    <p style="margin-top: 20px;"><a href="/dashboard" style="color: #3498db; text-decoration: none; font-weight: bold;">Back to Dashboard</a></p>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+        import { getFirestore, collection, getDocs, where, query } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZ5mI7mWmgvBekVPn0LJSoO-XMuARclAA",
+            authDomain: "distributed-systems-e4695.firebaseapp.com",
+            projectId: "distributed-systems-e4695",
+            storageBucket: "distributed-systems-e4695.appspot.com",
+            messagingSenderId: "854989262551",
+            appId: "1:854989262551:web:10bdae28bddb3b78c76a92",
+            measurementId: "G-TVRVC6DTKX"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+    
+        // Define the searchContacts function
+        function searchContacts() {
+            const registrationNumber = document.getElementById('registration_number').value;
+    
+            // Query Firestore for the contact details based on registration number
+            const q = query(collection(db, 'contacts'), where('registration_number', '==', registrationNumber));
+            getDocs(q).then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    const contact = querySnapshot.docs[0].data();
+                    displayContactDetails(contact);
+                } else {
+                    resetContactDetails();
+                    alert('Contact not found!');
+                }
+            }).catch((error) => {
+                console.error('Error getting documents: ', error);
+            });
+        }
+    
+        // Define the displayContactDetails and resetContactDetails functions
+        function displayContactDetails(contact) {
+            document.getElementById('username').innerText = contact.username;
+            document.getElementById('mobile_number').innerText = contact.mobile_number;
+            document.getElementById('email').innerText = contact.email;
+            document.getElementById('address').innerText = contact.address;
+            document.getElementById('contactDetails').style.display = 'block';
+        }
+    
+        function resetContactDetails() {
+            document.getElementById('username').innerText = '';
+            document.getElementById('mobile_number').innerText = '';
+            document.getElementById('email').innerText = '';
+            document.getElementById('address').innerText = '';
+            document.getElementById('contactDetails').style.display = 'none';
+        }
+    </script>
+    
+
+</body>
+</html>
